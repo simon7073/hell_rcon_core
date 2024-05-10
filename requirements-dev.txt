@@ -1,0 +1,5 @@
+-e .[socks]
+pytest>=2.8.0,<9
+pytest-cov
+trustme
+wheel
