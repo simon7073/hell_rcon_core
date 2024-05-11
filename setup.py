@@ -8,6 +8,10 @@ from setuptools.command.test import test as TestCommand
 
 CURRENT_PYTHON = sys.version_info[:2]
 REQUIRED_PYTHON = (3, 10)
+REQUIRED_PYTHON_STR = '.'.join([str(i) for i in REQUIRED_PYTHON])
+
+if sys.version_info < REQUIRED_PYTHON:
+    sys.exit(f"InstallError: Python {REQUIRED_PYTHON_STR} or newer is required.")
 
 # 'setup.py publish' shortcut.
 if sys.argv[-1] == "publish":
@@ -16,6 +20,7 @@ if sys.argv[-1] == "publish":
     sys.exit()
 
 requires = [
+    f"python_version >= '{REQUIRED_PYTHON_STR}'",
     # "charset_normalizer>=2,<4",
     # "idna>=2.5,<4",
     # "urllib3>=1.21.1,<3",
@@ -51,7 +56,7 @@ setup(
     package_data={"": ["LICENSE", "NOTICE"]},
     package_dir={"": "src"},
     include_package_data=True,
-    python_requires=">=3.10",
+    python_requires=f">={REQUIRED_PYTHON_STR}",
     install_requires=requires,
     license=about["__license__"],
 )
