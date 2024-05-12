@@ -3,10 +3,9 @@
 import re
 import time
 from functools import wraps
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from .base.HLLBaseLogging import get_logger
-from .base.HLLBaseTypes import ServerInfoType
 from .base.HLLCommands import HLLCommands
 
 logger = get_logger(__name__)
@@ -104,7 +103,6 @@ class Commands(HLLCommands):
                 time_array = time.strptime(date, "%Y.%m.%d-%H.%M.%S")
                 time_stamp = int(time.mktime(time_array))
                 result.append((steam_id, nickname, time_stamp, reason, admin))
-        result = []
         return result
 
     @call_parent_first
@@ -188,16 +186,25 @@ class Commands(HLLCommands):
             }
 
     @call_parent_first
-    def get_rotList(self) -> str:
+    def get_rotList(self) -> list[Any]:
         res = self.parent_result
         pattern = r"(.*?)\n"
         matches = re.findall(pattern, res)
-
-        return res.split('\n')
+        return matches
 
     @call_parent_first
-    def get_showLog(self, minutes, filter='') -> str:
-        return self.parent_result
+    def get_showLog(self, minutes, filter_word='') -> list[Any] | None:
+        res = self.parent_result
+        if res == "EMPTY":
+            return None
+        pattern = r"(.*?)\n"
+        matches = re.findall(pattern, res)
+
+        if matches:
+            return matches
+        return
+        # 日志玩家击杀正则
+        # pattern = r"\[(?:.*?) hours \((.*?)\)\] (.*?): (.*?)\((.*?)/(.*?)\) -> (.*?)\((.*?)/(.*?)\) with (.*?)\n"
 
     '''服务器设置'''
 

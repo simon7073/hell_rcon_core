@@ -3,6 +3,7 @@
 import array
 import re
 import socket
+import time
 import uuid
 from threading import get_ident
 from typing import List, Any
@@ -15,7 +16,7 @@ from .HLLBaseLogging import get_logger
   默认的 socket 读写长度 32KB, 最大为 64KB
   实际 HLL 的socket读写长度为8KB
 """
-MSGLEN = 32_768
+MSGLEN = 8 * 1024
 SOCKET_TIMEOUT_SEC = 10
 
 logger = get_logger(__name__)
@@ -86,12 +87,18 @@ class HLLConnection(HLLBaseConnection):
             except socket.timeout:
                 break
             msg += self._xor(buff)
-        return msg.decode()
+
+        # if not msg.endswith(b'\n'):
+        #     msg = msg.rsplit(b'\n')[0]
+        try:
+            return msg.decode()
+        except UnicodeDecodeError:
+            return msg.decode(errors='ignore')
 
     def get_request(self, command: str, is_list=False, log_info=False) -> str | list[Any]:
         """RCON 指令"""
         self.send(command)
-        raw = self.receive()
+        time.sleep(0.1)
 
         if re.match(r'^login', command, re.I):
             command = "login ********"
@@ -100,6 +107,7 @@ class HLLConnection(HLLBaseConnection):
         else:
             logger.debug(f"> {command}")
 
+        raw = self.receive()
         if not is_list:
             return raw
         else:

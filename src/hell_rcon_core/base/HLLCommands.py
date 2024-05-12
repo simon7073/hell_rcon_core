@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
-import sys
 from typing import Any, Tuple, Dict, List
-
-sys.path.append(r"D:\WorkSpace\bm-api-app")
 
 from .HLLBaseLogging import get_logger
 from .HLLBaseTypes import ServerInfoType
@@ -21,7 +18,7 @@ class HLLCommands:
             port=self.config["port"],
             password=self.config["password"],
         )
-        self.parent_result=None
+        self.parent_result = None
 
     '''获取信息'''
 
@@ -77,12 +74,13 @@ class HLLCommands:
 
     def get_rotList(self) -> str: return self.conn.get_request("RotList")
 
-    def get_showLog(self, minutes, filter='') -> str:
+    def get_showLog(self, minutes=1000, filter_word='') -> str:
         '''
             ShowLog <minutes-to-backtrack> ["filter"]
-            filter:
+            minutes: 1020min = 17hours
+            filter: keyword search
         '''
-        return self.conn.get_request(f"ShowLog {minutes} {filter}")
+        return self.conn.get_request(f"ShowLog {minutes} {filter_word}")
 
     '''服务器设置'''
 
@@ -181,4 +179,3 @@ class HLLCommands:
 
     def do_rconPassword(self, old_passwd, new_passwd) -> str: return self.conn.get_request(
         f"RconPassword {old_passwd} {new_passwd}")
-
