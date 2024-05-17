@@ -18,9 +18,9 @@ if sys.version_info < REQUIRED_PYTHON:
 #     os.system("twine upload dist/*")
 #     sys.exit()
 
-requires = [
-    f"python_version >= '{REQUIRED_PYTHON_STR}'",
-]
+# requires = [
+#     f"python >= {REQUIRED_PYTHON_STR}",
+# ]
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +29,10 @@ with open(os.path.join(here, "src", "hell_rcon_core", "__version__.py"), "r", "u
 
 with open("README.md", "r", "utf-8") as f:
     readme = f.read()
+
+about = {}
+with open(os.path.join(here, "src", "hell_rcon_core", "__about__.py"), "r", "utf-8") as fp:
+    exec(fp.read(), about)
 
 setup(
     name=about["__title__"],
@@ -43,7 +47,7 @@ setup(
     package_data={"": ["LICENSE", "NOTICE"]},
     package_dir={"": "src"},
     include_package_data=True,
-    python_requires=f">={REQUIRED_PYTHON_STR}",
-    install_requires=requires,
+    # python_requires=f">={REQUIRED_PYTHON_STR}",
+    # install_requires=requires,
     license=about["__license__"],
 )

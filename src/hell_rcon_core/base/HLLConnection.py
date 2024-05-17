@@ -98,7 +98,7 @@ class HLLConnection(HLLBaseConnection):
     def get_request(self, command: str, is_list=False, log_info=False) -> str | list[Any]:
         """RCON 指令"""
         self.send(command)
-        time.sleep(0.1)
+        time.sleep(0.5)
 
         if re.match(r'^login', command, re.I):
             command = "login ********"
