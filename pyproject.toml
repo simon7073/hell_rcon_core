@@ -1,29 +1,33 @@
-[tool.poetry]
-name = "hell_rcon_core"
-version = "0.1.0"
-description = "<Hell Let Loose> RCON API Core"
-authors = ["青丘白泽"]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-
-[tool.poetry.dev-dependencies]
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.isort]
-profile = "black"
-src_paths = ["src/hell_rcon_core", "test"]
-honor_noqa = true
 
-[tool.pytest.ini_options]
-addopts = "--doctest-modules"
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
-minversion = "6.2"
-testpaths = ["tests"]
+[project]
+dynamic = ["version"]
 
-#[[tool.poetry.source]]
-#name = "aliyun"
-#url = "https://mirrors.aliyun.com/pypi/simple"
+name = "hell_rcon_core"
+description = "<Hell Let Loose> RCON API Core"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+    {name = "青丘白泽", email = "pradyun@example.com"}
+]
+keywords = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "rich"
+]
+
+[project.urls]
+Homepage = "https://github.com/simon7073/hell_rcon_core/"
+Source = "https://github.com/simon7073/hell_rcon_core"
+
+
+[tool.hatch.version]
+path = "src/hell_rcon_core/__about__.py"
