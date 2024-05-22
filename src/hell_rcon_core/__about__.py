@@ -26,7 +26,7 @@ __summary__ = "<Hell Let Loose> RCON API Core"
 __description__ = "<Hell Let Loose> RCON API Core"
 __url__ = "https://github.com/simon7073/hell_rcon_core"
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 if base_dir is not None and os.path.exists(os.path.join(base_dir, ".commit")):
     with open(os.path.join(base_dir, ".commit")) as fp:

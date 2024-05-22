@@ -193,16 +193,16 @@ class Commands(HLLCommands):
         return matches
 
     @call_parent_first
-    def get_showLog(self, minutes, filter_word='') -> list[Any] | None:
-        res = self.parent_result
-        if res == "EMPTY":
-            return None
-        pattern = r"(.*?)\n"
-        matches = re.findall(pattern, res)
-
-        if matches:
-            return matches
-        return
+    def get_showLog(self, minutes, filter_word='') -> list[Any] | None: return self.parent_result
+        # res = self.parent_result
+        # if res == "EMPTY":
+        #     return None
+        # pattern = r"(.*?)\n"
+        # matches = re.findall(pattern, res)
+        #
+        # if matches:
+        #     return matches
+        # return
         # 日志玩家击杀正则
         # pattern = r"\[(?:.*?) hours \((.*?)\)\] (.*?): (.*?)\((.*?)/(.*?)\) -> (.*?)\((.*?)/(.*?)\) with (.*?)\n"
 

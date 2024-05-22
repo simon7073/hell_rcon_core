@@ -10,5 +10,5 @@
 # 构建安装
 ```shell
 python -m build
-python -m pip install .\dist\hell_rcon_core-0.1.1-py2.py3-none-any.whl
+python -m pip install .\dist\hell_rcon_core*.whl
 ```

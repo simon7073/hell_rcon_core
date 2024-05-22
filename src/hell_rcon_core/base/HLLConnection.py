@@ -3,6 +3,7 @@
 import array
 import re
 import socket
+import sys
 import time
 import uuid
 from threading import get_ident
@@ -36,7 +37,14 @@ class HLLConnection(HLLBaseConnection):
         self.sock.settimeout(SOCKET_TIMEOUT_SEC)
         # 设置 TCP 心跳
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, True)
-        self.sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60 * 1000, 30 * 1000))
+        if sys.platform == "win32":
+            self.sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60 * 1000, 30 * 1000))
+        else:
+            # linux 系统
+            self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)  # 开启
+            self.sock.setsockopt(socket.SOL_TCP, socket.TCP_KEEPIDLE, 60)  # 60s
+            self.sock.setsockopt(socket.SOL_TCP, socket.TCP_KEEPINTVL, 30)
+            self.sock.setsockopt(socket.SOL_TCP, socket.TCP_KEEPCNT, 3)
 
         self.id = f"{get_ident()}-{uuid.uuid4()}"
         if host and port and password:
@@ -98,7 +106,7 @@ class HLLConnection(HLLBaseConnection):
     def get_request(self, command: str, is_list=False, log_info=False) -> str | list[Any]:
         """RCON 指令"""
         self.send(command)
-        time.sleep(0.5)
+        time.sleep(0.1)
 
         if re.match(r'^login', command, re.I):
             command = "login ********"
