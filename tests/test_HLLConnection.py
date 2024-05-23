@@ -5,16 +5,13 @@ import time
 from hell_rcon_core.base.HLLConnection import HLLConnection
 
 if __name__ == '__main__':
-    # 202.165.70.15:29017 - 17u87
-    # 203.10.98.41:29027 - 6g6jk
-
-    # conn = HLLConnection("203.10.98.41", 29027, "6g6jk")
+    # conn = HLLConnection("203.10.00.00", 29027, "XXXXX")
     # # conn.connect()
     # conn.send("ShowLog 60000")
     # conn.receive().decode()
     # # print(conn.receive().decode())
     # conn.close()
-    with HLLConnection("203.10.98.41", "29027", "6g6jk") as conn:
+    with HLLConnection("203.10.00.00", "29027", "XXXXX") as conn:
         while True:
             try:
                 conn.send("Get PlayerIds")

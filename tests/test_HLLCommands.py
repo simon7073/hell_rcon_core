@@ -5,17 +5,15 @@ from hell_rcon_core.base.HLLBaseTypes import ServerInfoType
 from hell_rcon_core.base.HLLCommands import HLLCommands
 
 if __name__ == "__main__":
-    # 203.10.98.41:29027 - 6g6jk  FJ
-    # 202.165.70.15:29027 - 46y84  JWH
-    org = 'JWH'
+    org = 'org'
     SERVER_INFO: ServerInfoType = {
-        "host": "203.10.98.41",  # os.getenv("HLL_HOST"),
+        "host": "203.10.00.00",  # os.getenv("HLL_HOST"),
         "port": "29027",  # os.getenv("HLL_PORT"),
-        "password": "6g6jk",  # os.getenv("HLL_PASSWORD"),
+        "password": "XXXXX",  # os.getenv("HLL_PASSWORD"),
     } if org == 'FJ' else {
-        "host": "202.165.70.15",
+        "host": "202.165.00.00",
         "port": "29027",
-        "password": "46y84",
+        "password": "XXXXX",
     }
     ctl = HLLCommands(SERVER_INFO)
     logger.info(ctl.get_name())
